@@ -1,0 +1,30 @@
+version: "3"
+services:
+  correo:
+    build: ./correo
+    volumes:
+      - "./correo:/var/www/html"
+    container_name: 'correo'
+    depends_on:
+      - 'numeros'
+  numeros:
+    build: ./numeros
+    container_name: 'numeros'
+    ports:
+      - 3308:3306
+  fnmt:
+    build: ./fnmt
+    container_name: 'fnmt'
+    volumes:
+      - "./fnmt:/var/www/html"
+    depends_on:
+      - 'numeros'
+  loto:
+    build: ./loto
+    ports:
+      - 8081:80
+    volumes:
+      - "./loto:/var/www/html"
+    container_name: 'loto'
+    depends_on:
+      - 'numeros'
